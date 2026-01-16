@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C + C >> CGPA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #050814;
+      --bg-secondary: #0b1024;
+      --card-bg: #0f162f;
+      --accent-orange: #ff8a3d;
+      --accent-teal: #47e6d4;
+      --text-primary: #e9f1ff;
+      --text-muted: #9aa4c7;
+      --border-soft: rgba(255,255,255,0.06);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #0e1440, var(--bg-primary));
+      color: var(--text-primary);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 64px;
+      position: sticky;
+      top: 0;
+      background: linear-gradient(to bottom, rgba(5,8,20,0.9), transparent);
+      backdrop-filter: blur(8px);
+    }
+
+    header .logo {
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--accent-teal);
+    }
+
+    header nav a {
+      margin: 0 16px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    header nav a:hover {
+      color: var(--text-primary);
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: 1px solid var(--accent-orange);
+      color: white;
+      background: linear-gradient(135deg, #ff7a18, #ff9f59);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 120px 24px 80px;
+    }
+
+    /* header actions*/
+    .header-actions{display:flex;gap:14px}
+
+    /* ================== MENTORS ================== */
+.mentors{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:32px;
+}
+.mentor-card{
+  background:linear-gradient(180deg,var(--card-bg),#0a1028);
+  border:1px solid var(--border-soft);
+  border-radius:20px;
+  padding:28px;
+  text-align:center;
+}
+.mentor-card img{
+  width:96px;height:96px;border-radius:50%;margin-bottom:14px
+}
+.mentor-card p{color:var(--text-muted);font-size:14px}
+.ask-btn{
+  margin-top:16px;
+  width:100%;
+  padding:12px;
+  border-radius:999px;
+  border:1px solid var(--accent-orange);
+  background:transparent;
+  color:#fff;
+  cursor:pointer;
+}
+
+    .hero h1 {
+      font-size: 64px;
+      font-weight: 800;
+      color: var(--accent-teal);
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.6);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:20;
+    }
+    .modal.active{display:flex}
+
+    .modal-box{
+      width:420px;
+      background:linear-gradient(180deg,#141c32,#0f162a);
+      border-radius:20px;
+      padding:28px;
+      border:1px solid var(--border-soft);
+    }
+    .modal-box h3{margin-bottom:12px}
+    .modal-box input,
+    .modal-box textarea{
+      width:100%;
+      margin-top:12px;
+      padding:14px;
+      background:#1a233a;
+      border:none;
+      border-radius:10px;
+      color:#fff;
+    }
+    .modal-box textarea{height:90px;resize:none}
+    .close{
+      float:right;
+      cursor:pointer;
+      opacity:.7;
+    }
+    .tabs{
+      display:flex;
+      background:#1a233a;
+      border-radius:999px;
+      margin-bottom:16px;
+    }
+    .tabs button{
+      flex:1;
+      padding:10px;
+      border:none;
+      background:none;
+      color:#fff;
+      cursor:pointer;
+    }
+    .tabs .active{
+      background:#0f162a;
+      border-radius:999px;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 24px auto;
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .hero .actions {
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--accent-teal);
+      color: var(--accent-teal);
+    }
+
+    section {
+      padding: 96px 64px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-title h2 {
+      font-size: 42px;
+      font-weight: 700;
+    }
+
+    .section-title span {
+      color: var(--accent-orange);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, var(--card-bg), #0a1028);
+      border: 1px solid var(--border-soft);
+      border-radius: 20px;
+      padding: 28px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .quote {
+      text-align: center;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    .quote span {
+      display: block;
+      margin-top: 12px;
+      color: var(--accent-orange);
+      font-style: normal;
+    }
+
+    .mentors {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+    .mentor-card {
+      background: linear-gradient(180deg, var(--card-bg), #0a1028);
+      border-radius: 20px;
+      padding: 28px;
+      border: 1px solid var(--border-soft);
+      text-align: center;
+    }
+
+    .mentor-card img {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 16px;
+    }
+
+    .mentor-card h4 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .mentor-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    footer {
+      padding: 48px;
+      text-align: center;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-soft);
+    }
+
+    a{
+      text-decoration: none;
+      color: inherit;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 20px 24px;
+      }
+      section {
+        padding: 64px 24px;
+      }
+      .hero h1 {
+        font-size: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">C + C >> CGPA</div>
+  <nav>
+    <a href="#why">Why C+C?</a>
+    <a href="#mentors">Mentors</a>
+    <a href="#how">How It Works</a>
+  </nav>
+  <div class="header-actions">
+    <button id="loginBtn" class="btn-outline btn" onclick="openLogin()">Log In</button>
+    <button id="logoutBtn" class="btn-outline btn" onclick="logout()" style="display:none">Logout</button>
+    <button id="myQuestionsBtn" class="btn-outline btn" onclick="openMyQuestions()">My Questions</button>
+    <a href="#how" class="btn">Get Started</a>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>C + C &gt;&gt; cgpa</h1>
+  <p>Curiosity + Creativity is greater than any grade. Connect with professionals from Apple, Google, Microsoft and more.</p>
+  <div class="actions">
+    <a href="#mentors" class="btn">Find Your Mentor</a>
+    <a href="#how" class="btn btn-outline">Explore How It Works</a>
+  </div>
+</section>
+
+<section id="why">
+  <div class="section-title">
+    <h2>Why <span>C+C</span>?</h2>
+    <p style="color: var(--text-muted); margin-top: 12px;">Because your CGPA doesn't define your potential.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Real Experience &gt; Theory</h3>
+      <p>Learn from people who have actually built things, not just read about them.</p>
+    </div>
+    <div class="card">
+      <h3>Curiosity Wins</h3>
+      <p>The best careers are built on relentless curiosity and asking the right questions.</p>
+    </div>
+    <div class="card">
+      <h3>Direct Access</h3>
+      <p>Message professionals at top companies directly. No gatekeepers.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="quote">"The only stupid question is the one you didn't ask."
+    <span>— Every successful person ever</span>
+  </p>
+</section>
+
+<section id="mentors">
+  <div class="section-title">
+    <h2>Meet Your <span>Mentors</span></h2>
+    <p style="color: var(--text-muted); margin-top: 12px;">Professionals from the world's leading companies.</p>
+  </div>
+
+  <div class="mentors">
+    <div class="mentor-card">
+      <img src="https://media.licdn.com/dms/image/v2/D5603AQHV2c4_XFdHRA/profile-displayphoto-crop_800_800/B56Zg7QiCIG0AI-/0/1753340848095?e=1770249600&v=beta&t=p85B9E_5dIT8HQGeyzznfcDpNLnB0SkEgiPid7kDEvU" />
+      <h4>Ekansh Gupta</h4>
+      <p>Associate Business System Analyst · RedHat</p>
+      <button class="ask-btn" onclick="openAsk('Ekansh Gupta','RedHat','6969eecc5357803416cb60a5')">Ask a Question</button>
+    </div>
+    <div class="mentor-card">
+      <img src="https://media.licdn.com/dms/image/v2/D5603AQEuHr2NVJ8zdQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1721394125571?e=1770249600&v=beta&t=5NGvkT2mgAcaZJuBhnJkQ7VbtraPtO8n1UpSpReWMGo" />
+      <h4>Kushagra Shukla</h4>
+      <p>Upcoming Web Developer</p>
+      <button class="ask-btn" onclick="openAsk('Kushagra Shukla','Upcoming','6969efae5357803416cb60a7')">Ask a Question</button>
+    </div>
+    <div class="mentor-card">
+      <img src="https://media.licdn.com/dms/image/v2/D5635AQEhZmrZ22HpIg/profile-framedphoto-shrink_800_800/B56Zt5iSXLGsAg-/0/1767270590275?e=1769155200&v=beta&t=Km7z1bNXbKZg56FFmdPY055wHkaq8eZfnqUqcKONOc0" />
+      <h4>Ritisha Mishra</h4>
+      <p>Data Scientist/LLM Python Developer · Turing</p>
+       <button class="ask-btn" onclick="openAsk('Ritisha Mishra','Turing','6969f0765357803416cb60a9')">Ask a Question</button>
+    </div>
+    <div class="mentor-card">
+      <img src="https://media.licdn.com/dms/image/v2/D5603AQGSEg-9P4kXvg/profile-displayphoto-shrink_800_800/B56ZWdy5vuGoAc-/0/1742109125934?e=1770249600&v=beta&t=AmlSD0QmsC3bLL1SOKiDhHWqPJd3hrG8D5zoD5fzCaQ" />
+      <h4>Astha Tandon</h4>
+      <p>Associate Engineer · Capgemini</p>
+       <button class="ask-btn" onclick="openAsk('Astha Tandon','Capgemini','6969f1145357803416cb60ab')">Ask a Question</button>
+    </div>
+    <div class="mentor-card">
+      <img src="https://cdn.corenexis.com/files/b/3681993168.jpg" />
+      <h4>Navjot Kaur Chawla</h4>
+      <p>Senior Representative · Concentrix</p>
+       <button class="ask-btn" onclick="openAsk('Navjot Kaur Chawla','Concentrix','6969f1cd5357803416cb60ad')">Ask a Question</button>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="section-title">
+    <h2>How It <span>Works</span></h2>
+    <p style="color: var(--text-muted); margin-top: 12px;">From curious question to career‑changing advice in four simple steps.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h3>1. Sign Up</h3>
+      <p>Create your free account and tell us about your goals and aspirations.</p>
+    </div>
+    <div class="card">
+      <h3>2. Find Your Mentor</h3>
+      <p>Browse professionals by company, role, or expertise.</p>
+    </div>
+    <div class="card">
+      <h3>3. Ask Your Question</h3>
+      <p>Be specific about what you want to learn and where you feel stuck.</p>
+    </div>
+    <div class="card">
+      <h3>4. Get Guidance</h3>
+      <p>Receive personalized advice from people who have walked the path.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-title">
+    <h2>Mentors from <span>Top Companies</span></h2>
+  </div>
+  <div style="display:flex;justify-content:center;gap:40px;flex-wrap:wrap;color:var(--text-muted);font-weight:600;">
+    <span>Apple</span>
+    <span>Google</span>
+    <span>Microsoft</span>
+    <span>Amazon</span>
+    <span>Meta</span>
+  </div>
+</section>
+
+<section style="text-align:center; background: radial-gradient(circle at center, #1a0f0a, var(--bg-primary));">
+  <p style="color:var(--accent-teal); margin-bottom:16px;">Join 5,000+ aspirants already asking questions</p>
+  <h2 style="font-size:48px; font-weight:800;">Ready to Ask the Question <br><span style="color:var(--accent-orange);">That Changes Everything?</span></h2>
+  <p style="max-width:640px; margin:24px auto; color:var(--text-muted);">Your curiosity brought you here. Your first message could be the start of your dream career.</p>
+  <div class="actions" style="justify-content:center;">
+    <button class="btn" onclick="openLogin()">Start Your Journey</button>
+    <a href="#mentors" class="btn btn-outline">Browse Mentors First</a>
+  </div>
+  <p style="margin-top:20px; font-size:14px; color:var(--text-muted);">Free to join · No credit card required · First message free</p>
+</section>
+
+
+<footer>
+  © 2026 C + C >> CGPA · Curiosity over grades
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+  <div class="modal-box">
+    <span class="close" onclick="closeAll()">✕</span>
+    <h3>Welcome Back</h3>
+
+    <div class="tabs">
+      <button class="active" onclick="switchAuth(true)">Log In</button>
+      <button onclick="switchAuth(false)">Sign Up</button>
+    </div>
+
+    <form id="loginForm">
+      <input id= "login-email" placeholder="Email">
+      <input id= "login-password" type="password" placeholder="Password">
+      <button class="btn" style="margin-top:16px;width:100%">Log In</button>
+    </form>
+
+    <form id="signupForm" style="display:none">
+      <input id="signup-name" placeholder="Full Name">
+      <input id="signup-email" placeholder="Email">
+      <input id="signup-password" type="password" placeholder="Password">
+      <button class="btn" style="margin-top:16px;width:100%">Create Account</button>
+    </form>
+  </div>
+</div>
+
+<!-- ASK MODAL -->
+<div class="modal" id="askModal">
+  <div class="modal-box">
+    <span class="close" onclick="closeAll()">✕</span>
+    <h3 id="mentorTitle"></h3>
+    <input placeholder="Your Name">
+    <input placeholder="Your Email">
+    <input placeholder="Current Status / Background">
+    <textarea placeholder="Your Question"></textarea>
+    <button class="btn" style="margin-top:16px;width:100%">Send Question</button>
+  </div>
+</div>
+
+<section id="myQuestionsSection" style="display: none; padding: 40px;">
+  <h2>My Questions</h2>
+
+  <div id="myQuestionsList"></div>
+
+  <button class="btn-outline btn" onclick="closeMyQuestions()">Close</button>
+</section>
+
+
+<script>
+
+const token = localStorage.getItem("token");
+
+window.onload = () => {
+  if(token){
+    document.getElementById("loginBtn").style.display = "none";
+    document.getElementById("logoutBtn").style.display = "inline-block";
+  } else {
+    document.getElementById("loginBtn").style.display = "inline-block";
+    document.getElementById("logoutBtn").style.display = "none";
+  }
+};
+
+function logout(){
+  localStorage.clear();
+  location.reload();
+}
+
+function openLogin(){
+  if(localStorage.getItem("token")) return;
+  document.getElementById("loginModal").classList.add("active");
+}
+// function openAsk(name,company){
+//   document.getElementById("mentorTitle").innerText = "Ask " + name + " ("+company+")";
+//   document.getElementById("askModal").classList.add("active");
+// }
+
+function openAsk(name, company, mentorId){
+  const token = localStorage.getItem("token");
+
+  if(!token){
+    openLogin();
+    return;
+  }
+
+  localStorage.setItem("mentorId", mentorId);
+  localStorage.setItem("mentorName", name);
+  localStorage.setItem("mentorCompany", company);
+
+  document.getElementById("mentorTitle").innerText =
+    "Ask " + name + " (" + company + ")";
+  document.getElementById("askModal").classList.add("active");
+}
+
+
+function closeAll(){
+  document.querySelectorAll(".modal").forEach(m=>m.classList.remove("active"));
+}
+function switchAuth(isLogin){
+  document.getElementById("loginForm").style.display = isLogin ? "block":"none";
+  document.getElementById("signupForm").style.display = isLogin ? "none":"block";
+}
+
+const API_BASE="http://localhost:5000/api/auth";
+
+/* signup */
+const signupForm=document.getElementById("signupForm");
+if(signupForm) {
+  signupForm.addEventListener('submit',async(e)=>{
+    e.preventDefault();
+
+    const name=document.getElementById("signup-name").value;
+    const email=document.getElementById("signup-email").value;
+    const password=document.getElementById("signup-password").value;
+
+    try{
+      const res=await fetch(`${API_BASE}/signup`,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({name,email,password})
+      });
+
+      const data=await res.json();
+
+      if(!res.ok){
+        alert(data.message);
+        return;
+      }
+
+      alert("signup succesful. please login");
+      switchAuth(true);
+    } catch(err){
+      alert("server error");
+    }
+  });
+}
+
+/* login */
+const loginForm= document.getElementById("loginForm");
+if(loginForm){
+  loginForm.addEventListener("submit",async(e)=>{
+    e.preventDefault();
+
+    const email=document.getElementById("login-email").value;
+    const password=document.getElementById("login-password").value;
+
+    try{
+      const res=await fetch(`${API_BASE}/login`,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({email,password})
+      });
+
+      const data=await res.json();
+
+      if(!res.ok){
+        alert(data.message);
+        return;
+      }
+
+      //save session
+      localStorage.setItem("token",data.token);
+      localStorage.setItem("user",JSON.stringify(data.user));
+
+      //redirect or showing dashboard
+      alert("login successful");
+      closeAll();
+      location.reload();
+    } catch(err){
+      alert("Server error");
+    }
+  });
+}
+
+const askBtn = document.querySelector("#askModal .btn");
+
+if (askBtn) {
+  askBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      openLogin();
+      return;
+    }
+
+const inputs = document.querySelectorAll("#askModal textarea");
+
+const mentorId = localStorage.getItem("mentorId");
+const questionText = inputs[0].value;
+
+const questionData = {
+  mentorId: mentorId,
+  question: questionText
+};
+
+
+    try {
+      const res = await fetch("http://localhost:5000/api/questions/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(questionData)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message);
+        return;
+      }
+
+      alert("Question sent successfully");
+      inputs.forEach(i=>i.value="");
+      closeAll();
+    } catch (err) {
+      console.error(err);
+      alert("server error");
+    }
+  });
+}
+
+function closeMyQuestions(){
+  document.getElementById("myQuestionsSection").style.display='none';
+}
+
+async function openMyQuestions(){
+  const token=localStorage.getItem("token");
+
+  if(!token){
+    openLogin();
+    return;
+  }
+
+  document.getElementById("myQuestionsSection").style.display='block';
+
+  try{
+    const res=await fetch("http://localhost:5000/api/questions/my",{
+      headers:{
+        "Authorization":`Bearer ${token}`
+      }
+    });
+
+    const data=await res.json();
+
+    if(!res.ok){
+      alert(data.message);
+      return;
+    }
+
+    renderMyQuestions(data);
+
+  } catch(err) {
+    console.error(err);
+    alert("Failed to load questions");
+  }
+}
+
+function renderMyQuestions(questions) {
+  const container = document.getElementById("myQuestionsList");
+  container.innerHTML = "";
+
+  if (questions.length === 0) {
+    container.innerHTML = "<p>No questions asked yet.</p>";
+    return;
+  }
+
+  questions.forEach(q => {
+    const div = document.createElement("div");
+    div.style.border = "1px solid #444";
+    div.style.padding = "15px";
+    div.style.marginBottom = "15px";
+    div.style.borderRadius = "10px";
+
+    div.innerHTML = `
+      <h4>${q.mentor?.name || q.mentorName}
+          (${q.mentor?.company || q.mentorCompany})
+      </h4>
+      <p><strong>Question:</strong> ${q.question}</p>
+      <p><strong>Status:</strong> ${q.status}</p>
+      ${
+        q.answer
+          ? `<p><strong>Reply:</strong> ${q.answer}</p>`
+          : `<p style="color:orange;">Waiting for reply ⏳</p>`
+      }
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+</script>
+
+</body>
+</html>
