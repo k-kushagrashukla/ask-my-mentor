@@ -502,6 +502,10 @@
 
 <script>
 
+const API = "https://ask-my-mentor.onrender.com";
+const API_BASE = `${API}/api/auth`;
+
+
 const token = localStorage.getItem("token");
 
 window.onload = () => {
@@ -554,7 +558,7 @@ function switchAuth(isLogin){
   document.getElementById("signupForm").style.display = isLogin ? "none":"block";
 }
 
-const API_BASE="http://localhost:5000/api/auth";
+
 
 /* signup */
 const signupForm=document.getElementById("signupForm");
@@ -649,7 +653,7 @@ const questionData = {
 
 
     try {
-      const res = await fetch("http://localhost:5000/api/questions/ask", {
+      const res = await fetch("https://ask-my-mentor.onrender.com/api/questions/ask", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -690,7 +694,7 @@ async function openMyQuestions(){
   document.getElementById("myQuestionsSection").style.display='block';
 
   try{
-    const res=await fetch("http://localhost:5000/api/questions/my",{
+    const res=await fetch("https://ask-my-mentor.onrender.com/api/questions/my",{
       headers:{
         "Authorization":`Bearer ${token}`
       }
