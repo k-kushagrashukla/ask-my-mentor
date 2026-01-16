@@ -11,9 +11,13 @@ const app = express();
 // middleware
 app.use(cors({
   origin: process.env.FRONTEND_URL,
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
+
+// Handle preflight requests
+app.options("*", cors());
 
 
 app.use(express.json());
