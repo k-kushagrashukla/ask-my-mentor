@@ -10,10 +10,11 @@ const app = express();
 
 // middleware
 app.use(cors({
-  origin: "*", // allow browser requests
+  origin: process.env.FRONTEND_URL,
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 app.use(express.json());
 
