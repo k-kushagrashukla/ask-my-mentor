@@ -40,22 +40,28 @@ const newQuestion = await Question.create({
     const replyLink = `${process.env.FRONTEND_URL}/mentor-reply.html?token=${replyToken}`;
 
     // 📧 Send email
-    await transporter.sendMail({
-      from: process.env.EMAIL_FROM,
-      to: mentor.email,
-      subject: "New Student Question - AskMyMentor",
-      html: `
-        <h2>You've received a new student question</h2>
-        <p><b>Mentor:</b> ${mentor.name}</p>
-        <p><b>Company:</b> ${mentor.company}</p>
-        <p><b>Question:</b></p>
-        <p>${question}</p>
-        <br>
-        <a href="${replyLink}" target="_blank">
-           👉 Click here to reply to this student
-        </a>
-      `
-    });
+    // 📧 Send email (non-blocking on cloud)
+try {
+  await transporter.sendMail({
+    from: process.env.EMAIL_FROM,
+    to: mentor.email,
+    subject: "New Student Question - AskMyMentor",
+    html: `
+      <h2>You've received a new student question</h2>
+      <p><b>Mentor:</b> ${mentor.name}</p>
+      <p><b>Company:</b> ${mentor.company}</p>
+      <p><b>Question:</b></p>
+      <p>${question}</p>
+      <br>
+      <a href="${replyLink}" target="_blank">
+         👉 Click here to reply to this student
+      </a>
+    `
+  });
+} catch (err) {
+  console.log("📧 Email skipped (cloud SMTP blocked):", err.message);
+}
+
 
     res.status(201).json({
       message: "Question sent successfully",
