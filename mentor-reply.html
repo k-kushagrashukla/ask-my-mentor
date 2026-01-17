@@ -117,18 +117,52 @@ button:hover {
 </div>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const token = params.get("token");
+// const params = new URLSearchParams(window.location.search);
+// const token = params.get("token");
 
-async function sendReply() {
-  const answer = document.getElementById("replyText").value.trim();
+// async function sendReply() {
+//   const answer = document.getElementById("replyText").value.trim();
+//   if (!answer) {
+//     alert("Please write a reply first");
+//     return;
+//   }
+
+//   try {
+//     const res = await fetch(`https://ask-my-mentor.onrender.com/api/questions/reply/ + token,`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify({ answer })
+//     });
+
+//     const data = await res.json();
+
+//     if (!res.ok) throw new Error(data.message);
+
+//     document.getElementById("successMsg").style.display = "block";
+//     document.getElementById("errorMsg").style.display = "none";
+//     document.getElementById("replyText").value = "";
+//   } catch (err) {
+//     document.getElementById("errorMsg").style.display = "block";
+//     document.getElementById("successMsg").style.display = "none";
+//   }
+// }
+
+const API = "https://ask-my-mentor.onrender.com";
+
+const token = new URLSearchParams(window.location.search).get("token");
+
+document.getElementById("replyBtn").addEventListener("click", async () => {
+  const answer = document.getElementById("replyText").value;
+
   if (!answer) {
     alert("Please write a reply first");
     return;
   }
 
   try {
-    const res = await fetch(`https://ask-my-mentor.onrender.com/api/questions/reply/ + token,`, {
+    const res = await fetch(`${API}/api/questions/reply/${token}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -138,16 +172,19 @@ async function sendReply() {
 
     const data = await res.json();
 
-    if (!res.ok) throw new Error(data.message);
+    if (!res.ok) {
+      alert(data.message || "Failed to send reply");
+      return;
+    }
 
-    document.getElementById("successMsg").style.display = "block";
-    document.getElementById("errorMsg").style.display = "none";
-    document.getElementById("replyText").value = "";
+    alert("✅ Reply sent successfully!");
   } catch (err) {
-    document.getElementById("errorMsg").style.display = "block";
-    document.getElementById("successMsg").style.display = "none";
+    console.error(err);
+    alert("Server not reachable");
   }
-}
+});
+
+
 </script>
 
 </body>
