@@ -128,7 +128,7 @@ async function sendReply() {
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/questions/reply/${token}`, {
+    const res = await fetch(`https://ask-my-mentor.onrender.com/api/questions/reply/ + token,`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
