@@ -150,40 +150,51 @@ button:hover {
 // }
 
 const API = "https://ask-my-mentor.onrender.com";
+const urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get("token");
 
-const token = new URLSearchParams(window.location.search).get("token");
+if (!token) {
+  document.getElementById("errorMsg").textContent = "❌ No token in URL. Access via dashboard.";
+  document.getElementById("errorMsg").style.display = "block";
+}
 
-document.getElementById("replyBtn").addEventListener("click", async () => {
-  const answer = document.getElementById("replyText").value;
-
+async function sendReply() {
+  const replyText = document.getElementById("replyText");
+  const answer = replyText.value.trim();
+  
   if (!answer) {
-    alert("Please write a reply first");
+    document.getElementById("errorMsg").textContent = "Please write a reply first.";
+    document.getElementById("errorMsg").style.display = "block";
     return;
   }
+
+  const button = event.target;
+  button.disabled = true;
+  button.textContent = "Sending...";
 
   try {
     const res = await fetch(`${API}/api/questions/reply/${token}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ answer })
     });
 
     const data = await res.json();
 
-    if (!res.ok) {
-      alert(data.message || "Failed to send reply");
-      return;
-    }
+    if (!res.ok) throw new Error(data.message || "Server error");
 
-    alert("✅ Reply sent successfully!");
+    document.getElementById("successMsg").style.display = "block";
+    document.getElementById("errorMsg").style.display = "none";
+    replyText.value = "";
   } catch (err) {
     console.error(err);
-    alert("Server not reachable");
+    document.getElementById("errorMsg").textContent = `❌ ${err.message}`;
+    document.getElementById("errorMsg").style.display = "block";
+  } finally {
+    button.disabled = false;
+    button.textContent = "Send Reply";
   }
-});
-
+}
 
 </script>
 
