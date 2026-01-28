@@ -15,10 +15,16 @@ Basically this project simulates how real SaaS products handle user requests, em
 
 Features -
 > Submit mentor questions via a clean frontend UI
+
 > Automated email delivery using Brevo API
+
 > MongoDB database to store questions and responses
+
 > Unique response workflow for mentors
+
 > Fast Express.js backend with RESTful routes
+
 > Responsive frontend built with vanilla HTML, CSS & JavaScript
+
 > Environment variable support for API keys and secrets
 
