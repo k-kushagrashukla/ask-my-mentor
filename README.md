@@ -1,4 +1,4 @@
-# Ask My Mentor - Menotor Q&A Platform 
+# Ask My Mentor - Q&A Platform 
 
 A full-stack web platform that connects users with mentors by allowing them to ask questions and receive responses via an automated email and database-driven workflow. 
 Built as a real-world startup-style MVP with focus on speed, scalability, and clean system design.
